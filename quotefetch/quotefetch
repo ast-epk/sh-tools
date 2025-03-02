@@ -1,0 +1,14 @@
+#!/bin/sh
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+quoteselect()
+{
+RANGE=`jq '.quotes | length' $SCRIPT_DIR/quotes.json`
+INDEX=`shuf -i 1-${RANGE} -n 1`
+
+jq ".quotes[${INDEX}].text" $SCRIPT_DIR/quotes.json
+jq ".quotes[${INDEX}].from" $SCRIPT_DIR/quotes.json
+}
+
+quoteselect
